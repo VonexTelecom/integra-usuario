@@ -37,8 +37,7 @@ public class UsuarioController implements UsuarioControllerSwagger{
 	}
 	
 	@GetMapping
-	public ResponseEntity<Page<UsuarioOutputDto>> findAll(UsuarioSpecification spec, Pageable pageable/*, UsuarioFilter filter*/){
-		System.out.println(spec);
+	public ResponseEntity<Page<UsuarioOutputDto>> findAll(UsuarioSpecification spec, Pageable pageable, UsuarioFilter filter){
 		return ResponseEntity.ok(service.findAll(spec, pageable));
 	}
 

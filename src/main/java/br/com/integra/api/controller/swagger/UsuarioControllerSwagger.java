@@ -33,7 +33,7 @@ public interface UsuarioControllerSwagger {
 	@ApiResponses({
 		@ApiResponse(code = 200, response = Usuario.class, message = "Requisição com sucesso")
 	})
-	ResponseEntity<Page<UsuarioOutputDto>>findAll(UsuarioSpecification spec, Pageable pageable/*, UsuarioFilter filter*/);
+	ResponseEntity<Page<UsuarioOutputDto>>findAll(UsuarioSpecification spec, Pageable pageable, UsuarioFilter filter);
 
 	@ApiOperation(value = "Adiciona um novo Usuário", httpMethod = "POST")
 	@ApiResponses({
