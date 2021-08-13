@@ -10,21 +10,21 @@ pipeline {
                 sh ' mvn clean install -DskipTests'
             }
         }
-        stage ('Test') {
+        /*stage ('Test') {
             steps {    
                 sh ' mvn test'
             }
-        }        
+        } */       
         stage ('Imagem docker') {
             steps {
-                sh 'docker build . -t vonex/api_reference:${BUILD_NUMBER}'
+                sh 'docker build . -t vonex/api_usuario:${BUILD_NUMBER}'
             }
         }
         stage ('Run docker') {
             steps {
-                sh ' docker stop integra' 
-                sh ' docker rm integra'                
-                sh ' docker container run -d --name integra -p 8080:8080 vonex/api_reference:${BUILD_NUMBER}'
+                sh ' docker stop integra-usuario' 
+                sh ' docker rm integra-usuario'                
+                sh ' docker container run -d --name integra-usuario -p 8080:8080 vonex/api_usuario:${BUILD_NUMBER}'
             }
         }        
     }
