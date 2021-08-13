@@ -8,8 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import br.com.integra.api.enums.StatusEnum;
 import br.com.integra.api.enums.UsuarioTipo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,12 +50,14 @@ public class Usuario {
 	private UsuarioTipo tipo;
 	
 	@Column(name="ativo")
-	private Integer ativo;
+	private StatusEnum ativo;
 	
-	@Column(name="dataDeCriacao")
+	@Column(name="data_criacao")
+	@CreationTimestamp
 	private Date dataDeCriacao;
 	
-	//@ManyToOne
-	//private Long clientId;
+	@ManyToOne
+	@JoinColumn(name = "cliente_id", nullable = false)
+	private Cliente cliente;
 
 }

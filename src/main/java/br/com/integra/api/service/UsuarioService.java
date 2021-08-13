@@ -2,15 +2,19 @@ package br.com.integra.api.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.integra.api.dto.input.UsuarioInputDto;
 import br.com.integra.api.dto.output.UsuarioOutputDto;
+import br.com.integra.api.enums.StatusEnum;
 import br.com.integra.api.exception.EntidadeNaoEncontradaException;
 import br.com.integra.api.mapper.UsuarioMapper;
 import br.com.integra.api.model.Usuario;
 import br.com.integra.api.repository.UsuarioRepository;
+import br.com.integra.api.repository.specification.UsuarioSpecification;
 
 @Service
 public class UsuarioService {
@@ -46,6 +50,7 @@ public class UsuarioService {
 		repository.findById(id).orElseThrow(() -> new  EntidadeNaoEncontradaException("O Usuário de ID: "+id+" Não foi encontrado"){});
 		repository.deleteById(id);
 	}
+	
 	@SuppressWarnings("serial")
 	public UsuarioOutputDto findById(Long id){
 		
@@ -54,16 +59,24 @@ public class UsuarioService {
 		return mapper.modelToOutputDto(model);
 	}
 	
+	public Page<UsuarioOutputDto> findAll(UsuarioSpecification spec, Pageable pageable) {
+		Page<Usuario> page =  repository.findAll(spec, pageable);		
+		
+		return page.map(user -> mapper.modelToOutputDto(user));
+	}
+	
 	public void enable(Long id){
 		Usuario user = repository.findById(id).get();
-		user.setAtivo(1);
+		user.setAtivo(StatusEnum.ATIVO);
 		repository.save(user);
 	}
 	
 	public void disable(Long id){
 		Usuario user = repository.findById(id).get();
-		user.setAtivo(0);
+		user.setAtivo(StatusEnum.INATIVO);
 		repository.save(user);
 	}
+
+	
 		
 }

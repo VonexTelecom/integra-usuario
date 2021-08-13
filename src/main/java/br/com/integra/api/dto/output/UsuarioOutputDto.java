@@ -2,7 +2,9 @@ package br.com.integra.api.dto.output;
 
 import java.util.Date;
 
+import br.com.integra.api.enums.StatusEnum;
 import br.com.integra.api.enums.UsuarioTipo;
+import br.com.integra.api.model.Cliente;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,9 +28,9 @@ public class UsuarioOutputDto {
 	
 	private UsuarioTipo tipo;
 	
-	private Integer ativo;
+	private StatusEnum ativo;
 	
 	private Date dataDeCriacao;
 	
-	//private Integer clientId;
+	private Cliente cliente;
 }
