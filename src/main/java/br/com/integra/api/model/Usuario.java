@@ -49,15 +49,15 @@ public class Usuario {
 	@Column(name="tipo")
 	private UsuarioTipo tipo;
 	
-	@Column(name="ativo")
-	private StatusEnum ativo;
+	@Column(name="status")
+	private StatusEnum status;
 	
 	@Column(name="data_criacao")
 	@CreationTimestamp
 	private Date dataDeCriacao;
 	
 	@ManyToOne
-	@JoinColumn(name = "cliente_id", nullable = false)
+	@JoinColumn(name = "clienteId", nullable = false)
 	private Cliente cliente;
 
 }

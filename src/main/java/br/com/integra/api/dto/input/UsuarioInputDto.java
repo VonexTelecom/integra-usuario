@@ -19,7 +19,7 @@ public class UsuarioInputDto {
 	
 	private UsuarioTipo tipo;
 	
-	private StatusEnum ativo;
+	private StatusEnum status;
 	
 	private Cliente cliente;
 

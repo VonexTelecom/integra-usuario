@@ -65,16 +65,18 @@ public class UsuarioService {
 		return page.map(user -> mapper.modelToOutputDto(user));
 	}
 	
-	public void enable(Long id){
+	public UsuarioOutputDto enable(Long id){
 		Usuario user = repository.findById(id).get();
-		user.setAtivo(StatusEnum.ATIVO);
+		user.setStatus(StatusEnum.ATIVO);
 		repository.save(user);
+		return mapper.modelToOutputDto(user);
 	}
 	
-	public void disable(Long id){
+	public UsuarioOutputDto disable(Long id){
 		Usuario user = repository.findById(id).get();
-		user.setAtivo(StatusEnum.INATIVO);
+		user.setStatus(StatusEnum.INATIVO);
 		repository.save(user);
+		return mapper.modelToOutputDto(user);
 	}
 
 	

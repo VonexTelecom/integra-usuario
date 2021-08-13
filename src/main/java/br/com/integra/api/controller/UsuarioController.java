@@ -37,7 +37,8 @@ public class UsuarioController implements UsuarioControllerSwagger{
 	}
 	
 	@GetMapping
-	public ResponseEntity<Page<UsuarioOutputDto>> findAll(UsuarioSpecification spec, Pageable pageable, UsuarioFilter filter){
+	public ResponseEntity<Page<UsuarioOutputDto>> findAll(UsuarioSpecification spec, Pageable pageable/*, UsuarioFilter filter*/){
+		System.out.println(spec);
 		return ResponseEntity.ok(service.findAll(spec, pageable));
 	}
 
@@ -62,13 +63,15 @@ public class UsuarioController implements UsuarioControllerSwagger{
 	}
 	
 	@PutMapping("/ativar/{id}")
-	public void ativarUsuario(@PathVariable Long id){
-		service.enable(id);
+	public UsuarioOutputDto ativarUsuario(@PathVariable Long id){
+		UsuarioOutputDto user =service.enable(id);
+		return user;
 	}
 	
 	@PutMapping("/desativar/{id}")
-	public void desativarUsuario(@PathVariable Long id){
-		service.disable(id);
+	public UsuarioOutputDto desativarUsuario(@PathVariable Long id){
+		UsuarioOutputDto user = service.disable(id);
+		return user;
 	}
 
 

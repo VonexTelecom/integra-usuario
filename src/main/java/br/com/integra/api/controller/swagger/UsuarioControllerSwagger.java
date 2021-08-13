@@ -33,7 +33,7 @@ public interface UsuarioControllerSwagger {
 	@ApiResponses({
 		@ApiResponse(code = 200, response = Usuario.class, message = "Requisição com sucesso")
 	})
-	ResponseEntity<Page<UsuarioOutputDto>>findAll(UsuarioSpecification spec, Pageable pageable, UsuarioFilter filter);
+	ResponseEntity<Page<UsuarioOutputDto>>findAll(UsuarioSpecification spec, Pageable pageable/*, UsuarioFilter filter*/);
 
 	@ApiOperation(value = "Adiciona um novo Usuário", httpMethod = "POST")
 	@ApiResponses({
@@ -62,12 +62,12 @@ public interface UsuarioControllerSwagger {
 		@ApiResponse(code = 204, response = Usuario.class, message = "Requisição com sucesso"),
 		@ApiResponse(code = 404, response = Problem.class, message = "O recurso não foi encontrado")
 	})
-	void ativarUsuario(@PathVariable Long id);
+	UsuarioOutputDto ativarUsuario(@PathVariable Long id);
 	
 	@ApiOperation(value = "Desativa um Usuário", httpMethod = "PUT")
 	@ApiResponses({
 		@ApiResponse(code = 204, response = Usuario.class, message = "Requisição com sucesso"),
 		@ApiResponse(code = 404, response = Problem.class, message = "O recurso não foi encontrado")
 	})
-	void desativarUsuario(@PathVariable Long id);
+	UsuarioOutputDto desativarUsuario(@PathVariable Long id);
 }

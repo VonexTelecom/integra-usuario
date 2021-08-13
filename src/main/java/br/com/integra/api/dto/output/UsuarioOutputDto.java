@@ -28,7 +28,7 @@ public class UsuarioOutputDto {
 	
 	private UsuarioTipo tipo;
 	
-	private StatusEnum ativo;
+	private StatusEnum status;
 	
 	private Date dataDeCriacao;
 	
