@@ -57,7 +57,7 @@ public class Usuario {
 	private Date dataDeCriacao;
 	
 	@ManyToOne
-	@JoinColumn(name = "clienteId", nullable = false)
+	@JoinColumn(name = "cliente_id", nullable = false)
 	private Cliente cliente;
 
 }

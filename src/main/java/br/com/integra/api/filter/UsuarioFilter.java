@@ -23,5 +23,5 @@ public class UsuarioFilter {
 	private UsuarioTipo tipo;
 	
 	@ApiModelProperty(value = "Id do Cliente", dataType = "Long", example = "1234")
-	private Long clienteId;
+	private Long cliente_id;
 }
