@@ -14,7 +14,7 @@ pipeline {
             steps {    
                 sh ' mvn test'
             }
-        } */       
+        }*/       
         stage ('Imagem docker') {
             steps {
                 sh 'docker build . -t vonex/api_usuario:${BUILD_NUMBER}'
