@@ -10,4 +10,4 @@ ARG JAR_FILE=target/*.jar
 
 ADD ${JAR_FILE} api-usuario.jar
 
-ENTRYPOINT ["java","-Xmx1.5g","-jar","/api-usuario.jar"]
+ENTRYPOINT ["java","-Xmx2g","-jar","/api-usuario.jar"]
