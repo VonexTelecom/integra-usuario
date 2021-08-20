@@ -21,7 +21,6 @@ import br.com.integra.api.dto.input.UsuarioInputDto;
 import br.com.integra.api.dto.output.UsuarioOutputDto;
 import br.com.integra.api.filter.UsuarioFilter;
 import br.com.integra.api.model.Usuario;
-import br.com.integra.api.repository.UsuarioRepository;
 import br.com.integra.api.service.UsuarioService;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;

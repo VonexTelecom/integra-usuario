@@ -24,8 +24,6 @@ public class UsuarioOutputDto {
 	
 	private String usuario;
 	
-	private String senha;
-	
 	private UsuarioTipo tipo;
 	
 	private StatusEnum status;
