@@ -38,9 +38,11 @@ public class UsuarioService {
 	public UsuarioOutputDto save(UsuarioInputDto user) {
 		Cliente cliente = clienteRepository.findById(1L).orElseThrow(() ->
 		new EntidadeNaoEncontradaException("Cliente não encontrado") {}) ;
-		Usuario usuario = mapper.inputDtoToModel(user);
 		
 		user.setSenha(passwordEncoder.encode(user.getSenha()));
+		Usuario usuario = mapper.inputDtoToModel(user);
+		
+	
 		usuario.setCliente(cliente);
 		
 		return mapper.modelToOutputDto(repository.save(usuario));
