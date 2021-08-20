@@ -20,6 +20,5 @@ public class UsuarioInputDto {
 	
 	private StatusEnum status;
 	
-	private ClienteDtoInputUsuario cliente;
 
 }

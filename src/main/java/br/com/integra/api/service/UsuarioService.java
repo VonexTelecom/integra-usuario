@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,7 +14,9 @@ import br.com.integra.api.dto.output.UsuarioOutputDto;
 import br.com.integra.api.enums.StatusEnum;
 import br.com.integra.api.exception.EntidadeNaoEncontradaException;
 import br.com.integra.api.mapper.UsuarioMapper;
+import br.com.integra.api.model.Cliente;
 import br.com.integra.api.model.Usuario;
+import br.com.integra.api.repository.ClienteRepository;
 import br.com.integra.api.repository.UsuarioRepository;
 
 @Service
@@ -24,13 +27,25 @@ public class UsuarioService {
 	
 	@Autowired
 	private UsuarioMapper mapper;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Transactional
 	public UsuarioOutputDto save(UsuarioInputDto user) {
+		Cliente cliente = clienteRepository.findById(1L).orElseThrow(() ->
+		new EntidadeNaoEncontradaException("Cliente não encontrado") {}) ;
+		Usuario usuario = mapper.inputDtoToModel(user);
 		
-		Usuario savedModel = repository.save(mapper.inputDtoToModel(user));
+		user.setSenha(passwordEncoder.encode(user.getSenha()));
+		usuario.setCliente(cliente);
 		
-		return mapper.modelToOutputDto(savedModel);
+		return mapper.modelToOutputDto(repository.save(usuario));
+		
+	
 	}
 	
 	@SuppressWarnings("serial")
@@ -61,8 +76,7 @@ public class UsuarioService {
 	
 	public Page<UsuarioOutputDto> findAll(Specification<Usuario> spec, Pageable pageable) {	
 		
-		Page<Usuario> page =  repository.findAll(spec, pageable);		
-		System.out.println(page);
+		Page<Usuario> page =  repository.findAll(spec, pageable);	
 		return page.map(user -> mapper.modelToOutputDto(user));
 	}
 	
