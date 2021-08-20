@@ -2,8 +2,9 @@ package br.com.integra.api.enums;
 
 public enum StatusEnum {
 	
-	ATIVO(0),
-	INATIVO(1);
+	INATIVO(0),
+	ATIVO(1);
+	
 
 	int valor;
 	

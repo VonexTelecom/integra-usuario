@@ -27,4 +27,6 @@ public class Cliente {
 	
 	@Column(name="ativo")
 	private Integer ativo;
+	
+	
 }

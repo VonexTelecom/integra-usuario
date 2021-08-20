@@ -4,6 +4,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,16 +15,15 @@ import br.com.integra.api.exception.EntidadeNaoEncontradaException;
 import br.com.integra.api.mapper.UsuarioMapper;
 import br.com.integra.api.model.Usuario;
 import br.com.integra.api.repository.UsuarioRepository;
-import br.com.integra.api.repository.specification.UsuarioSpecification;
 
 @Service
 public class UsuarioService {
 	
 	@Autowired
-	UsuarioRepository repository;
+	private UsuarioRepository repository;
 	
 	@Autowired
-	UsuarioMapper mapper;
+	private UsuarioMapper mapper;
 
 	@Transactional
 	public UsuarioOutputDto save(UsuarioInputDto user) {
@@ -54,14 +54,15 @@ public class UsuarioService {
 	@SuppressWarnings("serial")
 	public UsuarioOutputDto findById(Long id){
 		
-		Usuario model = repository.findById(id).orElseThrow(() -> new  EntidadeNaoEncontradaException("O Usuário de ID: "+id+" Não foi encontrado"){});
+		Usuario model = repository.findById(id).orElseThrow(() -> new  EntidadeNaoEncontradaException("O Usuário de ID: "+id+" Não foi encontrado teste"){});
 		
 		return mapper.modelToOutputDto(model);
 	}
 	
-	public Page<UsuarioOutputDto> findAll(UsuarioSpecification spec, Pageable pageable) {
-		Page<Usuario> page =  repository.findAll(spec, pageable);		
+	public Page<UsuarioOutputDto> findAll(Specification<Usuario> spec, Pageable pageable) {	
 		
+		Page<Usuario> page =  repository.findAll(spec, pageable);		
+		System.out.println(page);
 		return page.map(user -> mapper.modelToOutputDto(user));
 	}
 	
