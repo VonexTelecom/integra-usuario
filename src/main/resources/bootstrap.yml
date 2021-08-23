@@ -1,0 +1,10 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: integra-usuario
+  cloud:
+    config:
+      server:
+        git:
+          uri: http://integra-config-server:8088  
