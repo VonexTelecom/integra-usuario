@@ -2,20 +2,24 @@ package br.com.integra.api.model;
 
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import br.com.integra.api.enums.StatusEnum;
-import br.com.integra.api.enums.UsuarioTipo;
+import br.com.integra.api.enums.UsuarioGrupo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -46,15 +50,18 @@ public class Usuario {
 	@Column(name="senha")
 	private String senha;
 	
-	@Column(name="tipo")
-	private UsuarioTipo tipo;
-	
 	@Column(name="status")
 	private StatusEnum status;
 	
 	@Column(name="data_criacao")
 	@CreationTimestamp
 	private Date dataDeCriacao;
+	
+	@ElementCollection(fetch = FetchType.EAGER)
+	@JoinTable(name = "Usuario_Grupo",
+		joinColumns = @JoinColumn(name = "usuario_id"))
+	@Column(name = "grupo_id")
+	private List<UsuarioGrupo> grupos;
 	
 	@ManyToOne
 	@JoinColumn(name = "cliente_id", nullable = false, referencedColumnName = "id")

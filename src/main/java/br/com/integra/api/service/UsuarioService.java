@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.integra.api.dto.input.UsuarioInputDto;
 import br.com.integra.api.dto.output.UsuarioOutputDto;
 import br.com.integra.api.enums.StatusEnum;
+import br.com.integra.api.enums.UsuarioGrupo;
 import br.com.integra.api.exception.EntidadeNaoEncontradaException;
 import br.com.integra.api.mapper.UsuarioMapper;
 import br.com.integra.api.model.Cliente;
@@ -37,8 +38,12 @@ public class UsuarioService {
 	@Transactional
 	public UsuarioOutputDto save(UsuarioInputDto user) {
 		Cliente cliente = clienteRepository.findById(1L).orElseThrow(() ->
-		new EntidadeNaoEncontradaException("Cliente não encontrado") {}) ;
+				new EntidadeNaoEncontradaException("Cliente não encontrado") {}) ;
 		
+		if(user.getGrupos().isEmpty())
+		{
+			user.getGrupos().add(UsuarioGrupo.NORMAL);
+		}
 		user.setSenha(passwordEncoder.encode(user.getSenha()));
 		Usuario usuario = mapper.inputDtoToModel(user);
 		

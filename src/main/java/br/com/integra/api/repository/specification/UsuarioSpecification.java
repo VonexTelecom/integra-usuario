@@ -7,12 +7,9 @@ import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 
-@And({ 
-	@Spec(path = "status", params = "status", spec = Equal.class),
-	@Spec(path = "tipo", params = "tipo", spec = Equal.class),
-	@Spec(path = "cliente.id", params = "clienteId", spec = Equal.class),
-})
-public interface UsuarioSpecification extends Specification<Usuario>{
-
+@And({ @Spec(path = "status", params = "status", spec = Equal.class),
+		@Spec(path = "grupos", params = "grupos", spec = Equal.class),
+		@Spec(path = "cliente.id", params = "clienteId", spec = Equal.class) })
+public interface UsuarioSpecification extends Specification<Usuario> {
 
 }

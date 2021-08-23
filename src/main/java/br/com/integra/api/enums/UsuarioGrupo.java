@@ -1,6 +1,7 @@
 package br.com.integra.api.enums;
 
-public enum UsuarioTipo {
+
+public enum UsuarioGrupo {
 	
 	NORMAL(0),
 	ADMIN(1),
@@ -8,7 +9,7 @@ public enum UsuarioTipo {
 
 	int valor;
 	
-	UsuarioTipo(int valor) {
+	UsuarioGrupo(int valor) {
 		this.valor = valor;
 	}
 }
