@@ -61,6 +61,7 @@ public class UsuarioService {
 		
 		Usuario model = repository.findById(id).orElseThrow(() -> new  EntidadeNaoEncontradaException("O Usuário de ID: "+id+" Não foi encontrado"){});
 		BeanUtils.copyProperties(request, model, "id");
+		model.setSenha(passwordEncoder.encode(request.getSenha()));
 		
 		return mapper.modelToOutputDto(repository.save(model));
 	}
