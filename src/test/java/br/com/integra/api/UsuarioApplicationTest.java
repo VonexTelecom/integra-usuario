@@ -1,4 +1,4 @@
-package br.com.vonex.api;
+package br.com.integra.api;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class ApiReferenceApplicationTests {
+public class UsuarioApplicationTest {
 	
 	@Test
 	public void contextLoads() {

@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "Usuario")
+@Table(name = "Usuario", schema = "Integra")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -66,5 +66,10 @@ public class Usuario {
 	@ManyToOne
 	@JoinColumn(name = "cliente_id", nullable = false, referencedColumnName = "id")
 	private Cliente cliente;
+
+	public void setUsuario(Usuario newUsuario) {
+		
+	}
+
 
 }
