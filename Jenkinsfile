@@ -24,8 +24,8 @@ pipeline {
             steps {
                 sh ' docker stop integra-usuario' 
                 sh ' docker rm integra-usuario'
-                sh ' docker container run -h integra-usuario -d --name integra-usuario -p 8080:8080 vonex/api_usuario:${BUILD_NUMBER}'
-                //sh ' docker container run --network intranet -h integra-usuario -d --name integra-usuario -p 8080:8080 vonex/api_usuario:${BUILD_NUMBER}'
+                //sh ' docker container run -h integra-usuario -d --name integra-usuario -p 8080:8080 vonex/api_usuario:${BUILD_NUMBER}'
+                sh ' docker container run --network host -h integra-usuario -d --name integra-usuario -p 8080:8080 vonex/api_usuario:${BUILD_NUMBER}'
             }
         }        
     }
