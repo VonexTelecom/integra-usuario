@@ -5,4 +5,4 @@ spring:
     name: integra-usuario
   cloud:
     config:
-      uri: http://integra-config-server:8088
+      uri: http://177.53.17.224/integra-config-server:8088
