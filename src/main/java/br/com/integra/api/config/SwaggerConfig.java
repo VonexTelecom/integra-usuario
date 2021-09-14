@@ -159,7 +159,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
 				.title("Integra - Micro Serviço usuário")
 				.description("Serviço de cadastro de usuários")
 				.version("2.0")
-				.contact(new Contact("Vonex", "https://www.vonex.com.br", "contato@vonex.com.br"))
+				.contact(new Contact("Integra", "https://www.integra.com.br", "contato@integra.com.br"))
 				.build();
 	}
 	
