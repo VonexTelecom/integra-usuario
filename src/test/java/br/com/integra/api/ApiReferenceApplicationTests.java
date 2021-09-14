@@ -1,4 +1,4 @@
-package br.com.vonex.api;
+package br.com.integra.api;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

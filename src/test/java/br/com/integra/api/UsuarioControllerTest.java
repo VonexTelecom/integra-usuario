@@ -1,4 +1,4 @@
-package br.com.vonex.api;
+package br.com.integra.api;
 
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
