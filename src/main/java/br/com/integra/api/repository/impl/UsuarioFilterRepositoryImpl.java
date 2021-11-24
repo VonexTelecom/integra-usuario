@@ -27,7 +27,7 @@ public class UsuarioFilterRepositoryImpl implements UsuarioFilterRepository{
 		StringBuilder jpql = new StringBuilder();
 		HashMap<String, Object> parameter = new HashMap<String, Object>();
 		
-		jpql.append("Select u from Usuario u join u.grupos g where 0=0 ");
+		jpql.append("Select distinct u from Usuario u left join u.grupos g where 0=0 ");
 		
 		if(filter.getGrupo() != null) {
 			jpql.append("and g.id = :grupo ");

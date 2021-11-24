@@ -22,4 +22,5 @@ public class Grupo {
 	private Long id;
 	
 	private String nome;
+	
 }
