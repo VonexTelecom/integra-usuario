@@ -12,7 +12,6 @@ import br.com.integra.api.dto.output.UsuarioOutputDto;
 import br.com.integra.api.exception.handler.Problem;
 import br.com.integra.api.filter.UsuarioFilter;
 import br.com.integra.api.model.Usuario;
-import br.com.integra.api.repository.specification.UsuarioSpecification;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -31,9 +30,9 @@ public interface UsuarioControllerSwagger {
 
 	@ApiOperation(value = "Busca todos os Usuários", httpMethod = "GET")
 	@ApiResponses({
-		@ApiResponse(code = 200, response = Usuario.class, message = "Requisição com sucesso"),
+		@ApiResponse(code = 200, response = UsuarioOutputDto.class, message = "Requisição com sucesso"),
 		@ApiResponse(code = 204, response = Usuario.class, message = "Não encontrado")
-	})ResponseEntity<Page<UsuarioOutputDto>>findAll(UsuarioSpecification spec, Pageable pageable, UsuarioFilter filter);
+	})ResponseEntity<Page<UsuarioOutputDto>>findAll(Pageable pageable, UsuarioFilter filter);
 	
 	
 	@ApiOperation(value = "Adiciona um novo Usuário", httpMethod = "POST")

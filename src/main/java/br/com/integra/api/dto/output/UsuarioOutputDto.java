@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import br.com.integra.api.enums.StatusEnum;
-import br.com.integra.api.enums.UsuarioGrupo;
 import br.com.integra.api.model.Cliente;
+import br.com.integra.api.model.Grupo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,7 +25,7 @@ public class UsuarioOutputDto {
 	
 	private String usuario;
 	
-	private List<UsuarioGrupo> grupos;
+	private List<Grupo> grupos;
 	
 	private StatusEnum status;
 	

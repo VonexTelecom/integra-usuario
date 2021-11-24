@@ -4,7 +4,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +13,7 @@ import br.com.integra.api.dto.output.UsuarioOutputDto;
 import br.com.integra.api.enums.StatusEnum;
 import br.com.integra.api.enums.UsuarioGrupo;
 import br.com.integra.api.exception.EntidadeNaoEncontradaException;
+import br.com.integra.api.filter.UsuarioFilter;
 import br.com.integra.api.mapper.UsuarioMapper;
 import br.com.integra.api.model.Cliente;
 import br.com.integra.api.model.Usuario;
@@ -36,8 +36,8 @@ public class UsuarioService {
 	private PasswordEncoder passwordEncoder;
 
 	@Transactional
-	public UsuarioOutputDto save(UsuarioInputDto user) {
-		Cliente cliente = clienteRepository.findById(1L).orElseThrow(() ->
+	public UsuarioOutputDto save(UsuarioInputDto user, Long clienteId) {
+		Cliente cliente = clienteRepository.findById(clienteId).orElseThrow(() ->
 				new EntidadeNaoEncontradaException("Cliente não encontrado") {}) ;
 		
 		if(user.getGrupos().isEmpty())
@@ -47,12 +47,14 @@ public class UsuarioService {
 		user.setSenha(passwordEncoder.encode(user.getSenha()));
 		Usuario usuario = mapper.inputDtoToModel(user);
 		
+		if(user.getStatus() == null) {
+			user.setStatus(StatusEnum.ATIVO);
+		}
+		
 	
 		usuario.setCliente(cliente);
 		
 		return mapper.modelToOutputDto(repository.save(usuario));
-		
-	
 	}
 	
 	@SuppressWarnings("serial")
@@ -60,8 +62,12 @@ public class UsuarioService {
 	public UsuarioOutputDto update(Long id, UsuarioInputDto request) {
 		
 		Usuario model = repository.findById(id).orElseThrow(() -> new  EntidadeNaoEncontradaException("O Usuário de ID: "+id+" Não foi encontrado"){});
-		BeanUtils.copyProperties(request, model, "id");
+		BeanUtils.copyProperties(request, model, "id", "cliente");
 		model.setSenha(passwordEncoder.encode(request.getSenha()));
+		
+		if(request.getStatus() == null) {
+			model.setStatus(StatusEnum.ATIVO);
+		}
 		
 		return mapper.modelToOutputDto(repository.save(model));
 	}
@@ -77,26 +83,27 @@ public class UsuarioService {
 	@SuppressWarnings("serial")
 	public UsuarioOutputDto findById(Long id){
 		
-		Usuario model = repository.findById(id).orElseThrow(() -> new  EntidadeNaoEncontradaException("O Usuário de ID: "+id+" Não foi encontrado teste"){});
+		Usuario model = repository.findById(id).orElseThrow(() -> new  EntidadeNaoEncontradaException("O Usuário de ID: "+id+" Não foi encontrado"){});
 		
 		return mapper.modelToOutputDto(model);
 	}
 	
-	public Page<UsuarioOutputDto> findAll(Specification<Usuario> spec, Pageable pageable) {	
+	public Page<UsuarioOutputDto> findAll(Pageable pageable, UsuarioFilter filter, Long clienteId) {	
 		
-		Page<Usuario> page =  repository.findAll(spec, pageable);	
+		Page<Usuario> page =  repository.findAll(pageable, filter, clienteId);	
 		return page.map(user -> mapper.modelToOutputDto(user));
 	}
 	
 	public UsuarioOutputDto enable(Long id){
-		Usuario user = repository.findById(id).get();
+		Usuario user = repository.findById(id).orElseThrow(() -> new  EntidadeNaoEncontradaException("O Usuário de ID: "+id+" Não foi encontrado"){});
+		
 		user.setStatus(StatusEnum.ATIVO);
 		repository.save(user);
 		return mapper.modelToOutputDto(user);
 	}
 	
 	public UsuarioOutputDto disable(Long id){
-		Usuario user = repository.findById(id).get();
+		Usuario user = repository.findById(id).orElseThrow(() -> new  EntidadeNaoEncontradaException("O Usuário de ID: "+id+" Não foi encontrado"){});
 		user.setStatus(StatusEnum.INATIVO);
 		repository.save(user);
 		return mapper.modelToOutputDto(user);

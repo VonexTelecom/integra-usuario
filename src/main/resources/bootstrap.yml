@@ -6,3 +6,4 @@ spring:
   cloud:
     config:
       uri: http://integra-config-server:8088
+
