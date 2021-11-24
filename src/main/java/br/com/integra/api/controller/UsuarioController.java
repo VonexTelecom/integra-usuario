@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.integra.api.config.security.CheckSecurity;
 import br.com.integra.api.config.security.IntegraSecurity;
 import br.com.integra.api.controller.swagger.UsuarioControllerSwagger;
 import br.com.integra.api.dto.input.UsuarioInputDto;
@@ -43,7 +42,7 @@ public class UsuarioController implements UsuarioControllerSwagger{
 	@Override
 	@GetMapping
 	public ResponseEntity<Page<UsuarioOutputDto>> findAll(Pageable pageable, UsuarioFilter filter){ 
-		return ResponseEntity.ok(service.findAll(pageable, filter, 1L));
+		return ResponseEntity.ok(service.findAll(pageable, filter, security.getClienteId()));
 	}
 
 	@PostMapping
