@@ -60,7 +60,7 @@ public class Usuario {
 	@CreationTimestamp
 	private Date dataDeCriacao;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.PERSIST)
 	@JoinTable(name = "Usuario_Grupo", 
 	  joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), 
 	  inverseJoinColumns = @JoinColumn(name = "grupo_id", referencedColumnName = "id"))
