@@ -4,7 +4,6 @@ package br.com.integra.api.model;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -60,7 +59,7 @@ public class Usuario {
 	@CreationTimestamp
 	private Date dataDeCriacao;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.PERSIST)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "Usuario_Grupo", 
 	  joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), 
 	  inverseJoinColumns = @JoinColumn(name = "grupo_id", referencedColumnName = "id"))
