@@ -1,5 +1,7 @@
 package br.com.integra.api.service;
 
+import java.util.Iterator;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,11 +18,13 @@ import br.com.integra.api.exception.EntidadeNaoEncontradaException;
 import br.com.integra.api.filter.UsuarioFilter;
 import br.com.integra.api.mapper.UsuarioMapper;
 import br.com.integra.api.model.Cliente;
+import br.com.integra.api.model.Grupo;
 import br.com.integra.api.model.Usuario;
 import br.com.integra.api.repository.ClienteRepository;
 import br.com.integra.api.repository.UsuarioRepository;
 
 @Service
+@SuppressWarnings("serial")
 public class UsuarioService {
 	
 	@Autowired
@@ -40,10 +44,10 @@ public class UsuarioService {
 		Cliente cliente = clienteRepository.findById(clienteId).orElseThrow(() ->
 				new EntidadeNaoEncontradaException("Cliente não encontrado") {}) ;
 		
-		if(user.getGrupos().isEmpty())
-		{
+		if(user.getGrupos().isEmpty()) {
 			user.getGrupos().add(UsuarioGrupo.NORMAL);
 		}
+		
 		user.setSenha(passwordEncoder.encode(user.getSenha()));
 		Usuario usuario = mapper.inputDtoToModel(user);
 		
@@ -51,28 +55,31 @@ public class UsuarioService {
 			user.setStatus(StatusEnum.ATIVO);
 		}
 		
-	
+		for (int i=0; i < user.getGrupos().size(); i++) {
+			usuario.getGrupos().get(i).setId(Long.valueOf(user.getGrupos().get(i).getValor()));			
+		}
 		usuario.setCliente(cliente);
-		
+
 		return mapper.modelToOutputDto(repository.save(usuario));
 	}
 	
-	@SuppressWarnings("serial")
 	@Transactional
 	public UsuarioOutputDto update(Long id, UsuarioInputDto request) {
 		
 		Usuario model = repository.findById(id).orElseThrow(() -> new  EntidadeNaoEncontradaException("O Usuário de ID: "+id+" Não foi encontrado"){});
-		BeanUtils.copyProperties(request, model, "id", "cliente");
+		BeanUtils.copyProperties(request, model, "id", "cliente", "grupos");
 		model.setSenha(passwordEncoder.encode(request.getSenha()));
 		
 		if(request.getStatus() == null) {
 			model.setStatus(StatusEnum.ATIVO);
 		}
-		
+		for (int i=0; i < request.getGrupos().size(); i++) {
+			model.getGrupos().get(i).setId(Long.valueOf(request.getGrupos().get(i).getValor()));			
+		}
+
 		return mapper.modelToOutputDto(repository.save(model));
 	}
 	
-	@SuppressWarnings("serial")
 	@Transactional
 	public void delete(Long id) {
 		
@@ -80,7 +87,6 @@ public class UsuarioService {
 		repository.deleteById(id);
 	}
 	
-	@SuppressWarnings("serial")
 	public UsuarioOutputDto findById(Long id){
 		
 		Usuario model = repository.findById(id).orElseThrow(() -> new  EntidadeNaoEncontradaException("O Usuário de ID: "+id+" Não foi encontrado"){});
