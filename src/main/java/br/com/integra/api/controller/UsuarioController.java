@@ -26,7 +26,6 @@ import br.com.integra.api.service.UsuarioService;
 @RequestMapping("/usuario")
 public class UsuarioController implements UsuarioControllerSwagger{
 
-	
 	@Autowired
 	private UsuarioService service;
 	
@@ -36,12 +35,11 @@ public class UsuarioController implements UsuarioControllerSwagger{
 
 			UsuarioOutputDto dto = service.findById(id);
 			return ResponseEntity.ok(dto);
-		}
+	}
+	
 	@Override
 	@GetMapping
-	public ResponseEntity<Page<UsuarioOutputDto>> findAll(UsuarioSpecification spec, Pageable pageable, UsuarioFilter filter)
-			{ 
-		
+	public ResponseEntity<Page<UsuarioOutputDto>> findAll(UsuarioSpecification spec, Pageable pageable, UsuarioFilter filter) { 
 		return ResponseEntity.ok(service.findAll(spec, pageable));
 	}
 

@@ -37,54 +37,41 @@ public class UsuarioService {
 
 	@Transactional
 	public UsuarioOutputDto save(UsuarioInputDto user) {
-		Cliente cliente = clienteRepository.findById(1L).orElseThrow(() ->
-				new EntidadeNaoEncontradaException("Cliente não encontrado") {}) ;
-		
+		Cliente cliente = clienteRepository.findById(1L).orElseThrow(() -> new EntidadeNaoEncontradaException("Cliente não encontrado") {}) ;
 		if(user.getGrupos().isEmpty())
 		{
 			user.getGrupos().add(UsuarioGrupo.NORMAL);
 		}
 		user.setSenha(passwordEncoder.encode(user.getSenha()));
 		Usuario usuario = mapper.inputDtoToModel(user);
-		
-	
 		usuario.setCliente(cliente);
-		
 		return mapper.modelToOutputDto(repository.save(usuario));
-		
-	
 	}
 	
 	@SuppressWarnings("serial")
 	@Transactional
 	public UsuarioOutputDto update(Long id, UsuarioInputDto request) {
-		
 		Usuario model = repository.findById(id).orElseThrow(() -> new  EntidadeNaoEncontradaException("O Usuário de ID: "+id+" Não foi encontrado"){});
 		BeanUtils.copyProperties(request, model, "id");
 		model.setSenha(passwordEncoder.encode(request.getSenha()));
-		
 		return mapper.modelToOutputDto(repository.save(model));
 	}
 	
 	@SuppressWarnings("serial")
 	@Transactional
 	public void delete(Long id) {
-		
 		repository.findById(id).orElseThrow(() -> new  EntidadeNaoEncontradaException("O Usuário de ID: "+id+" Não foi encontrado"){});
 		repository.deleteById(id);
 	}
 	
 	@SuppressWarnings("serial")
 	public UsuarioOutputDto findById(Long id){
-		
 		Usuario model = repository.findById(id).orElseThrow(() -> new  EntidadeNaoEncontradaException("O Usuário de ID: "+id+" Não foi encontrado teste"){});
-		
 		return mapper.modelToOutputDto(model);
 	}
 	
 	public Page<UsuarioOutputDto> findAll(Specification<Usuario> spec, Pageable pageable) {	
-		
-		Page<Usuario> page =  repository.findAll(spec, pageable);	
+		Page<Usuario> page = repository.findAll(spec, pageable);	
 		return page.map(user -> mapper.modelToOutputDto(user));
 	}
 	
@@ -101,7 +88,5 @@ public class UsuarioService {
 		repository.save(user);
 		return mapper.modelToOutputDto(user);
 	}
-
-	
 		
 }

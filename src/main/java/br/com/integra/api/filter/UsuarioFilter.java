@@ -2,7 +2,6 @@ package br.com.integra.api.filter;
 
 import br.com.integra.api.enums.StatusEnum;
 import br.com.integra.api.enums.UsuarioGrupo;
-import br.com.integra.api.model.Cliente;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -25,4 +24,7 @@ public class UsuarioFilter {
 	
 	@ApiModelProperty(value = "Id do Cliente", dataType = "Long", example = "1234")
 	private Long clienteId;
+	
+	@ApiModelProperty(value = "fantasma", dataType = "Boolean", example = "0")
+	private Boolean fantasma;
 }

@@ -67,4 +67,7 @@ public class Usuario {
 	@JoinColumn(name = "cliente_id", nullable = false, referencedColumnName = "id")
 	private Cliente cliente;
 
+	@Column(name="fantasma")
+	private Boolean fantasma;
+
 }
