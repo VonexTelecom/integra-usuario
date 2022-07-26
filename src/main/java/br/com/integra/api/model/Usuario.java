@@ -1,6 +1,7 @@
 package br.com.integra.api.model;
 
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -66,5 +67,7 @@ public class Usuario {
 	@ManyToOne
 	@JoinColumn(name = "cliente_id", nullable = false, referencedColumnName = "id")
 	private Cliente cliente;
+	
+	private LocalDateTime ultimoLogin;
 
 }
