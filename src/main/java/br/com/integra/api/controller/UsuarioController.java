@@ -15,20 +15,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.integra.api.config.security.IntegraSecurity;
 import br.com.integra.api.controller.swagger.UsuarioControllerSwagger;
 import br.com.integra.api.dto.input.UsuarioInputDto;
 import br.com.integra.api.dto.output.UsuarioOutputDto;
 import br.com.integra.api.filter.UsuarioFilter;
-import br.com.integra.api.repository.specification.UsuarioSpecification;
 import br.com.integra.api.service.UsuarioService;
 
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController implements UsuarioControllerSwagger{
-
 	
 	@Autowired
 	private UsuarioService service;
+	
+	@Autowired
+	private IntegraSecurity security;
 	
 	@Override
 	@GetMapping("/{id}")
@@ -39,16 +41,15 @@ public class UsuarioController implements UsuarioControllerSwagger{
 		}
 	@Override
 	@GetMapping
-	public ResponseEntity<Page<UsuarioOutputDto>> findAll(UsuarioSpecification spec, Pageable pageable, UsuarioFilter filter)
-			{ 
-		
-		return ResponseEntity.ok(service.findAll(spec, pageable));
+	public ResponseEntity<Page<UsuarioOutputDto>> findAll(Pageable pageable, UsuarioFilter filter){ 
+		return ResponseEntity.ok(service.findAll(pageable, filter, security.getClienteId()));
 	}
 
 	@PostMapping
+	@Override
 	public ResponseEntity<UsuarioOutputDto> save(@RequestBody UsuarioInputDto user, UriComponentsBuilder uri) {
 		
-		UsuarioOutputDto dto = service.save(user);
+		UsuarioOutputDto dto = service.save(user, security.getClienteId());
 		return ResponseEntity.created(uri.path("/usuario/{id}").buildAndExpand(dto.getId()).toUri()).body(dto);
 	}
 	

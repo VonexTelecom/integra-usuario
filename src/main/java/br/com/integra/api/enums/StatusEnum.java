@@ -1,5 +1,10 @@
 package br.com.integra.api.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum StatusEnum {
 	
 	INATIVO(0),
@@ -7,8 +12,4 @@ public enum StatusEnum {
 	
 
 	int valor;
-	
-	StatusEnum(int valor) {
-		this.valor = valor;
-	}
 }

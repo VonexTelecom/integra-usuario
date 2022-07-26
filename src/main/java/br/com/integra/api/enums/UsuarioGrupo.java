@@ -1,11 +1,13 @@
 package br.com.integra.api.enums;
 
+import lombok.Getter;
 
+@Getter
 public enum UsuarioGrupo {
 	
-	NORMAL(0),
-	ADMIN(1),
-	MASTER(2);
+	NORMAL(1),
+	ADMIN(2),
+	MASTER(3);
 
 	int valor;
 	

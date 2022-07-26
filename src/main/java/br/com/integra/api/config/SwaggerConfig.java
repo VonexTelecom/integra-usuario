@@ -3,7 +3,9 @@ package br.com.integra.api.config;
 import com.fasterxml.classmate.TypeResolver;
 
 import br.com.integra.api.controller.swagger.PageableSwagger;
+import br.com.integra.api.exception.handler.Problem;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -47,6 +49,9 @@ import java.util.List;
 @Import(BeanValidatorPluginsConfiguration.class)
 public class SwaggerConfig implements WebMvcConfigurer {
 
+	@Value("${api.project.authorization}")
+	private String url;
+
 	@Bean
 	public Docket apiDocket() {
 		TypeResolver typeResolver = new TypeResolver();
@@ -61,7 +66,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
 				.globalResponseMessage(RequestMethod.POST, globalPostPutResponseMessages())
 				.globalResponseMessage(RequestMethod.PUT, globalPostPutResponseMessages())
 				.globalResponseMessage(RequestMethod.DELETE, globalDeleteResponseMessages())
-				.additionalModels(typeResolver.resolve(br.com.integra.api.exception.handler.Problem.class))
+				.additionalModels(typeResolver.resolve(Problem.class))
 				.ignoredParameterTypes(ServletWebRequest.class,
 						URL.class, URI.class, URLStreamHandler.class, Resource.class,
 						File.class, InputStream.class)
@@ -93,7 +98,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
 	}
 	
 	private List<GrantType> grantTypes() {
-		return Arrays.asList(new ResourceOwnerPasswordCredentialsGrant("/oauth/token"));
+		return Arrays.asList(new ResourceOwnerPasswordCredentialsGrant(url+"/oauth/token"));
 	}
 	
 	private List<AuthorizationScope> scopes() {
@@ -156,9 +161,9 @@ public class SwaggerConfig implements WebMvcConfigurer {
 	
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder()
-				.title("Integra - Micro Serviço usuário")
-				.description("Serviço de cadastro de usuários")
-				.version("2.0")
+				.title("Integra - API Usuário")
+				.description("API para o Sistema Integra")
+				.version("1.0")
 				.contact(new Contact("Integra", "https://www.integra.com.br", "contato@integra.com.br"))
 				.build();
 	}
@@ -171,5 +176,5 @@ public class SwaggerConfig implements WebMvcConfigurer {
 		registry.addResourceHandler("/webjars/**")
 			.addResourceLocations("classpath:/META-INF/resources/webjars/");
 	}
-	
 }
+
